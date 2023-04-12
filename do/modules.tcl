@@ -1,0 +1,17 @@
+ ./packages/sim_tools/clk_pack_tb.vhd
+ ./packages/sim_tools/export_pack_tb.vhd
+ ./packages/sim_tools/fifo_pack_tb.vhd
+ ./packages/sim_tools/list_pack_tb.vhd
+ ./packages/sim_tools/list_string_pack_tb.vhd
+ ./packages/sim_tools/print_list_pack_tb.vhd
+ ./packages/sim_tools/print_pack_tb.vhd
+ ./packages/sim_tools/random_pack_tb.vhd
+ ./packages/proj_specific_src/const_pack.vhd
+ ./packages/proj_specific_src/types_pack.vhd
+ ./packages/proj_specific_src/signals_pack.vhd
+ ./packages/proj_specific_sim/const_pack_tb.vhd
+ ./packages/proj_specific_sim/types_pack_tb.vhd
+ ./packages/proj_specific_sim/signals_pack_tb.vhd
+ ./modules/reset/hdl/reset.vhd
+ ./modules/reset/sim/reset_tb.vhd
+ ./modules/reset/sim/reset_tb.vhd
