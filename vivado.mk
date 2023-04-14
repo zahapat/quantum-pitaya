@@ -13,7 +13,7 @@ VIVADO_BINPATH = $(VIVADO_INSTALLPATH)/$(VIVADO_VERSION)/bin
 
 
 # [make new]: FPGA part number
-PART = xc7k160tffg676-1
+PART = xc7z010clg400-1
 
 
 # [make core/ip]: Name for the new IP package
@@ -140,7 +140,7 @@ generics : ./vivado/$(PROJ_NAME).xpr
 	$(VIVADO_BINPATH)/vivado.bat -nolog -nojou -mode batch -source ./tcl/project_specific/vivado/make_generics.tcl -notrace
 
 # make ooc TOP=<module>: Run Synthesis in Out-of-context mode
-ooc : ./vivado/$(PROJ_NAME).xpr 0_report_added_modules.rpt
+ooc : ./vivado/$(PROJ_NAME).xpr ./vivado/0_report_added_modules.rpt
 	$(info ----- RUN SYNTHESIS IN OUT-OF-CONTEXT MODE -----)
 	$(VIVADO_BINPATH)/vivado.bat -nolog -nojou -mode batch -source ./tcl/generic/vivado/make_ooc.tcl -notrace -tclargs $(TOP)
 

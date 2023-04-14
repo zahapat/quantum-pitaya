@@ -12,6 +12,6 @@
  ./packages/proj_specific_sim/const_pack_tb.vhd
  ./packages/proj_specific_sim/types_pack_tb.vhd
  ./packages/proj_specific_sim/signals_pack_tb.vhd
- ./modules/reset/hdl/reset.vhd
- ./modules/reset/sim/reset_tb.vhd
- ./modules/reset/sim/reset_tb.vhd
+ ./modules/axis_adc_readout/hdl/axis_adc_readout.v
+ ./modules/axis_adc_readout/sim/axis_adc_readout_tb.v
+ ./modules/axis_adc_readout/hdl/axis_adc_readout.v

@@ -24,7 +24,7 @@ PACKAGES_MAKEFILE = packages.mk
 
 # Project author details
 ENGINEER ?= patrik_zahalka
-EMAIL ?= patrik.zahalka@univie.ac.at
+EMAIL ?= p.zahalka@uq.edu.au
 
 
 # Libraries for HDL sources and testbenches

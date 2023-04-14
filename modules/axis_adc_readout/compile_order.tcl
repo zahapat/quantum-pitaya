@@ -21,18 +21,18 @@ set vivado_added_scripts_report [open $vivado_added_scripts_report_path "a"]
 # -------------------------------------------------------
 #    * Vivado
 add_files -fileset "sources_1" -norecurse {\
-    ./modules/adc_readout/hdl/adc_readout.v\
+    ./modules/axis_adc_readout/hdl/axis_adc_readout.v\
 }
 set_property library "lib_src" [get_files {\
-    ./modules/adc_readout/hdl/adc_readout.v\
+    ./modules/axis_adc_readout/hdl/axis_adc_readout.v\
 }]
 puts -nonewline $vivado_added_hdl_report "\
-    ./modules/adc_readout/hdl/adc_readout.v\n"
+    ./modules/axis_adc_readout/hdl/axis_adc_readout.v\n"
 update_compile_order -fileset sources_1
 
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/adc_readout/hdl/adc_readout.v\n"
+    ./modules/axis_adc_readout/hdl/axis_adc_readout.v\n"
 
 
 # -------------------------------------------------------
@@ -46,7 +46,7 @@ puts -nonewline $simulator_comporder "\
 # -------------------------------------------------------
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/adc_readout/sim/adc_readout_tb.v\n"
+    ./modules/axis_adc_readout/sim/axis_adc_readout_tb.v\n"
 
 
 

@@ -724,7 +724,7 @@ for {set i 0} {$i < $hier_levels} {incr i} {
     # Break if lost in infinite loop
     incr act_break_level
     if {$act_break_level == $break_level} {
-        puts "TCL: ERROR: Modules can not be found. Design hierarchy is incomplete. Quit."
+        puts "TCL: ERROR: Modules could not be found. Design hierarchy is incomplete. Quit."
         quit
     }
 
@@ -742,6 +742,10 @@ for {set i 0} {$i < $hier_levels} {incr i} {
 # puts -nonewline $all_modules "[file normalize $topFileFound_normalized]"
 puts -nonewline $all_modules_added_vivado "./$topFileFound_path"
 close $all_modules_added_vivado
+
+
+# Set the new top module after all required sources have been added
+set_property TOP $topFile [current_fileset]
 
 if {${find_tb_file} == 1} {
     puts -nonewline $all_modules "\
