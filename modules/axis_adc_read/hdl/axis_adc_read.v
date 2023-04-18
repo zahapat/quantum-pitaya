@@ -10,20 +10,19 @@
 //      - BIT_DIFFERENTIAL_CLK: 1(true) or 0(false)
 //      - INT_ADC_CHANNELS: 1 or 2
 //      - INT_ADC_DATA_WIDTH: Enter the number of ADC data bits
-//      - INT_AXIS_DATA_WIDTH: 32 bits typically
+//      - INT_AXIS_DATA_WIDTH: 32 bits typically, must be divisible by INT_DAC_INPUT_CHANNELS, all parts must be symmetric
 
 
 `timescale 1 ns / 1 ps
 
-module axis_adc_readout
+module axis_adc_read
     #(
         parameter BIT_CREATE_CLK_BUFFERS = 1'b1,
         parameter BIT_DIFFERENTIAL_CLK = 1'b0,
         parameter INT_ADC_CHANNELS = 2,
         parameter INT_ADC_DATA_WIDTH = 10,
         parameter INT_AXIS_DATA_WIDTH = 32
-    )
-    (
+    )(
         // Inputs
         input   wire[BIT_DIFFERENTIAL_CLK:0] in_adc_clk,    // [clk_n][clk_p]
         input   wire[INT_ADC_DATA_WIDTH-1:0] in_adc_data_a,
@@ -31,8 +30,8 @@ module axis_adc_readout
 
         // Outputs
         output  wire out_adc_clk,
-        output  wire out_adc_data_a,
-        output  wire out_adc_data_b,
+        output  wire[INT_ADC_DATA_WIDTH-1:0] out_adc_data_a,
+        output  wire[INT_ADC_DATA_WIDTH-1:0] out_adc_data_b,
 
         output  wire m_axis_valid,
         output  wire[INT_AXIS_DATA_WIDTH-1:0] m_axis_data

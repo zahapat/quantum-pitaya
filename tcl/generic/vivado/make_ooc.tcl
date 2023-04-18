@@ -44,6 +44,9 @@ close_project -quiet
 puts "TCL: OPENING PROJECT $_xil_proj_name_"
 open_project "${origin_dir}/vivado/${_xil_proj_name_}.xpr"
 
+# Remember what the top module was at the beginning, so that no changes are made to the hierarchy after OOC
+set originalTop [get_property TOP [current_fileset]]
+puts "TCL: The original top module before OOC Synthesis is: $originalTop"
 
 # Make sure only path tail is extracted from the file path, extract then the file name
 set top_file_full_name [file tail $topFile]
@@ -54,10 +57,13 @@ puts "TCL: top_file_noposix = $top_file_noposix"
 set all_srcs [get_files -of [get_filesets sources_1]]
 set found_future_top_full_path ""
 foreach abs_path_to_file $all_srcs {
+    puts "DEBUG: abs_path_to_file $abs_path_to_file"
     set file_full_name [file tail $abs_path_to_file]
     set file_noposix [lindex [split $file_full_name "."] 0]
     if {[string equal $file_noposix $top_file_noposix]} {
+        set found_future_top_full_name $file_full_name
         set found_future_top_full_path $abs_path_to_file
+        puts "DEBUG: found_future_top_full_path = $abs_path_to_file"
         set found_future_top_noposix $file_noposix
     }
 }
@@ -68,8 +74,20 @@ if {$found_future_top_full_path eq ""} {
 }
 
 
-# Set a new top module
-set_property TOP $found_future_top_noposix [current_fileset]
+# Set a new top module. It is a must to update compile order straight after.
+# update_compile_order
+set_property source_mgmt_mode DisplayOnly [current_project]
+set_property TOP "${found_future_top_noposix}" [current_fileset]
+set_property source_mgmt_mode All [current_project]
+update_compile_order -fileset sources_1
+
+# update_compile_order
+# set newTop [get_property TOP [current_fileset]]
+# puts "TCL: New TOP file reported after update_compile_order: $newTop"
+# set_property source_mgmt_mode None [current_project]
+# set_property TOP $found_future_top_full_path [current_fileset]
+# set newTop [get_property TOP [current_fileset]]
+# puts "TCL: New TOP file reported after update_compile_order: $newTop"
 
 # Make sure the Top file name is not a testbench file, remove '_tb.' or '_top_tb.' to use source file for synthesis
 set found_future_top_full_path [string map {"_top_tb." "."} $found_future_top_full_path]
@@ -95,16 +113,17 @@ report_compile_order -file "$reports_absdir/0_ooc_compile_order.rpt"
 # ------------------------------------
 # Set Strategy for Synthesis
 puts "TCL: Set Strategy for Synthesis "
-set_property strategy Flow_PerfOptimized_high [get_runs synth_1]
+source "${origin_dir}/tcl/project_specific/vivado/strategy_synth.tcl"
+# set_property strategy Flow_PerfOptimized_high [get_runs synth_1]
 # set_property CURRENT_STEP "synth_design -mode out_of_context" [get_runs synth_1]
 
 # Get verbose reports about IP status before synthesis
 puts "TCL: Get verbose reports about IP status and config affecting timing analysis "
 report_property [get_runs synth_1] -file "$reports_absdir/0_ooc_report_property.rpt"
 
-# Execute Synthesis
+# Start synthesis in OOC mode
 puts "TCL: Running Synthesis "
-source "${origin_dir}/tcl/project_specific/vivado/strategy_synth.tcl"
+reset_run synth_1
 synth_design -mode out_of_context
 opt_design
 
@@ -145,6 +164,20 @@ write_edif -force "$reports_absdir/1_ooc_post_synth_netlist.edf"
 # report_config_timing -all -file "${origin_dir}/vivado/report_config_timing.rpt"
 
 report_utilization -spreadsheet_file "$reports_absdir/1_ooc_post_synth_util_sprd.rpt"
+
+
+# ------------------------------------
+# - Reset to the original TOP module -
+# ------------------------------------
+# set_property source_mgmt_mode DisplayOnly [current_project]
+set_property TOP "${originalTop}" [current_fileset]
+# set_property source_mgmt_mode All [current_project]
+# update_compile_order -fileset sources_1
+
+puts "TCL: Top module before OOC: $originalTop"
+puts "TCL: Top module after OOC:  [get_property TOP [current_fileset]]"
+puts "TCL: The two modules above should match."
+
 
 
 # -----------------

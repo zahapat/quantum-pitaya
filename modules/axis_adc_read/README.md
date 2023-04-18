@@ -6,7 +6,7 @@ ADC clock signal can be either differential or single-ended. Whether single-ende
 
 This core is designed for single-ended data signals.
 
-This module has been originaly developed to interface an ADC on the Red Pitaya STEMLab 125-10 board. Therefore, further testing (for example, signal pass-through) should be performed on other devices before using this core with other devices.
+This module has been originaly developed to interface an ADC on the Red Pitaya STEMLab 125-10 board. Therefore, further testing (for example, signal pass-through) should be performed on other devices before using this core with other platforms.
 
 ### Main Operation
 
@@ -19,7 +19,7 @@ This module has been originaly developed to interface an ADC on the Red Pitaya S
 
 2. To synthesize this module in out-of-context mode, do the following:
 - make reset
-- make src TOP=axis_adc_readout.v
+- make src TOP=axis_adc_read.v
 - make ooc
 
 ## TODO
