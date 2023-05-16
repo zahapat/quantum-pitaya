@@ -21,18 +21,18 @@ set vivado_added_scripts_report [open $vivado_added_scripts_report_path "a"]
 # -------------------------------------------------------
 #    * Vivado
 add_files -fileset "sources_1" -norecurse {\
-    ./modules/axis_dac_ad976xastz/hdl/axis_dac_ad976xastz.v\
+    ./modules/clock_synthesizer/hdl/clock_synthesizer.v\
 }
-set_property library "lib_src" [get_files {\
-    ./modules/axis_dac_ad976xastz/hdl/axis_dac_ad976xastz.v\
-}]
+# set_property library "lib_src" [get_files {\
+#     ./modules/clock_synthesizer/hdl/clock_synthesizer.v\
+# }]
 puts -nonewline $vivado_added_hdl_report "\
-    ./modules/axis_dac_ad976xastz/hdl/axis_dac_ad976xastz.v\n"
+    ./modules/clock_synthesizer/hdl/clock_synthesizer.v\n"
 update_compile_order -fileset sources_1
 
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/axis_dac_ad976xastz/hdl/axis_dac_ad976xastz.v\n"
+    ./modules/clock_synthesizer/hdl/clock_synthesizer.v\n"
 
 
 # -------------------------------------------------------
@@ -46,7 +46,7 @@ puts -nonewline $simulator_comporder "\
 # -------------------------------------------------------
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/axis_dac_ad976xastz/sim/axis_dac_ad976xastz_tb.v\n"
+    ./modules/clock_synthesizer/sim/clock_synthesizer_tb.v\n"
 
 
 

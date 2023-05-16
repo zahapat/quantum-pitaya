@@ -1,5 +1,3 @@
-# Delete wave.do
-file delete "$tb_top_dir_abspath/wave.do"
 
 # Set variables for the simulation project
 variable run_time "-all"
@@ -7,19 +5,34 @@ variable run_time "-all"
 # Open project
 if {$lib_sim_vhdl eq "work"} {
     if {$lib_src_vhdl eq "work"} {
-        project open $proj_root_dir/modelsim/project.mpf
+        project open $proj_root_dir/simulator/project.mpf
         project compileall
     }
 }
 
+
+# source ${proj_root_dir}/do/compile_all.tcl
+
+
+set file_fullname [file tail $filepath]
+puts "TCL: file_fullname = $file_fullname"
+set file_name [string range [lindex [split $file_fullname "."] 0] 0 end]
+puts "TCL: file_name = $file_name"
+set file_lang [string range [lindex [split $file_fullname "."] 1] 0 end]
+puts "TCL: file_lang = $file_lang"
+
+
+
 # NEW
 set tb_top_abspath [string range [lindex $all_modules [expr [llength $all_modules]-1]] 0 end]
-set filepath_correction [concat ${proj_root_dir}${tb_top_abspath}]
-puts "TCL: filepath_correction = $filepath_correction"
-set tb_top_dir_abspath [string map {" ./" "/"} $filepath_correction]
-puts "TCL: tb_top_dir_abspath = $tb_top_dir_abspath "
+set filepath_correction [concat ${proj_root_dir} ${tb_top_abspath}]
+set filepath_correction [string map {" " ""} $filepath_correction]
+set tb_top_dir_abspath [string map {"./" "/"} $filepath_correction]
 set tb_top_dir_abspath [file dirname "[file normalize $tb_top_dir_abspath]"]
+puts "TCL: tb_top_dir_abspath: $tb_top_dir_abspath"
 
+# Delete wave.do
+file delete "$tb_top_dir_abspath/wave.do"
 
 # Check if harness module is used
 set if_harness_present 0
@@ -92,4 +105,4 @@ if {[file exists "$tb_top_dir_abspath/wave.do"]} {
 #     # add wave sim:/signals_pack_tb/*
 # }
 
-source "$proj_root_dir/modelsim/run.do"
+source "$proj_root_dir/simulator/run.do"

@@ -15,8 +15,8 @@ This module has been originaly developed to interface an DAC on the Red Pitaya S
 
 2. To synthesize this module in out-of-context mode, do the following:
 - make reset
-- make src TOP=axis_dac_write.v
-- make ooc
+- make src TOP=axis_dac_ad976xastz.v
+- make ooc TOP=axis_dac_ad976xastz.v
 
 ## TODO
 - Add support for differential outputs

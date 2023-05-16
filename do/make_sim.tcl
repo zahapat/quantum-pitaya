@@ -87,8 +87,12 @@ if {[file exist "$proj_root_dir/simulator/$lib_sim_vhdl"]} {
 list all_modules {}
 set slurp_file [open "$proj_root_dir/do/modules.tcl" r]
 while {-1 != [gets $slurp_file line]} {
-    set filepath [string range $line 0 end]
-    lappend all_modules "$filepath"
+    set filepath [string map {" " ""} ${line}]
+    if {$filepath eq ""} {
+        puts "TCL: Ignoring invalid line."
+    } else {
+        lappend all_modules "$filepath"
+    }
 }
 close $slurp_file
 puts "TCL: all_modules = $all_modules"
@@ -101,7 +105,7 @@ source "$proj_root_dir/do/compile_unisim.tcl"
 source "$proj_root_dir/do/compile_osvvm.tcl"
 
 # Compile UVVM packages
-source "$proj_root_dir/do/compile_uvvm.tcl"
+# source "$proj_root_dir/do/compile_uvvm.tcl"
 
 # Compile User UVVM VIPs
 source "$proj_root_dir/do/compile_uvvm_user_vips/compile_all_user_vips.do"

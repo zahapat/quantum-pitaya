@@ -1,4 +1,7 @@
-
+    # Add Packages
+    # source "./packages/sim_tools/compile_order.tcl"
+    # source "./packages/proj_specific_src/compile_order.tcl"
+    # source "./packages/proj_specific_sim/compile_order.tcl"
 
     # 1)   * Add Packages to Filesets + Libraries
     # 1.0) Opal Kelly Frontpanel Package -> sources_1 + default library work (no action)
@@ -69,70 +72,70 @@
 
 
     #      * Add Opal Kelly Frontpanel IP
-    source "./packages/ok/frontpanel_xem7350_k160t/compile_order.tcl"
+    # source "./packages/ok/frontpanel_xem7350_k160t/compile_order.tcl"
 
 
     # 4)   * Add Xilinx IP Cores
     # 4.1) fifo_generator_0
     # ERROR: [Common 17-69] Command failed: IP name 'fifo_generator_0' is already in use in this project.  Please choose a different name.
     # create_ip -name fifo_generator -vendor xilinx.com -library ip -version 13.2 -module_name fifo_generator_0
-    if {[catch {\
-        create_ip -name fifo_generator -vendor xilinx.com -library ip -version 13.2 -module_name fifo_generator_0\
-    } error_msg]} {
-        puts "TCL: Skipping adding already existing an Xilinx IP Core."
-    } else {
-        set_property -dict [list CONFIG.Fifo_Implementation {Independent_Clocks_Builtin_FIFO}\
-                                CONFIG.Input_Data_Width {32}\
-                                CONFIG.Input_Depth {65536}\
-                                CONFIG.Output_Data_Width {32}\
-                                CONFIG.Output_Depth {65536}\
-                                CONFIG.Reset_Type {Asynchronous_Reset}\
-                                CONFIG.Use_Dout_Reset {false}\
-                                CONFIG.Data_Count_Width {16}\
-                                CONFIG.Write_Data_Count_Width {16}\
-                                CONFIG.Read_Data_Count_Width {16}\
-                                CONFIG.Full_Threshold_Assert_Value {65536}\
-                                CONFIG.Full_Threshold_Negate_Value {65535}\
-                                CONFIG.Empty_Threshold_Assert_Value {3}\
-                                CONFIG.Empty_Threshold_Negate_Value {4}] [get_ips fifo_generator_0]
-        set_property -dict [list CONFIG.Valid_Flag {true}] [get_ips fifo_generator_0]
-        set_property -dict [list CONFIG.Programmable_Full_Type {No_Programmable_Full_Threshold}\
-                                CONFIG.Programmable_Empty_Type {Single_Programmable_Empty_Threshold_Constant}\
-                                CONFIG.Empty_Threshold_Assert_Value {5}\
-                                CONFIG.Empty_Threshold_Negate_Value {6}] [get_ips fifo_generator_0]
-    }
+    # if {[catch {\
+    #     create_ip -name fifo_generator -vendor xilinx.com -library ip -version 13.2 -module_name fifo_generator_0\
+    # } error_msg]} {
+    #     puts "TCL: Skipping adding already existing an Xilinx IP Core."
+    # } else {
+    #     set_property -dict [list CONFIG.Fifo_Implementation {Independent_Clocks_Builtin_FIFO}\
+    #                             CONFIG.Input_Data_Width {32}\
+    #                             CONFIG.Input_Depth {65536}\
+    #                             CONFIG.Output_Data_Width {32}\
+    #                             CONFIG.Output_Depth {65536}\
+    #                             CONFIG.Reset_Type {Asynchronous_Reset}\
+    #                             CONFIG.Use_Dout_Reset {false}\
+    #                             CONFIG.Data_Count_Width {16}\
+    #                             CONFIG.Write_Data_Count_Width {16}\
+    #                             CONFIG.Read_Data_Count_Width {16}\
+    #                             CONFIG.Full_Threshold_Assert_Value {65536}\
+    #                             CONFIG.Full_Threshold_Negate_Value {65535}\
+    #                             CONFIG.Empty_Threshold_Assert_Value {3}\
+    #                             CONFIG.Empty_Threshold_Negate_Value {4}] [get_ips fifo_generator_0]
+    #     set_property -dict [list CONFIG.Valid_Flag {true}] [get_ips fifo_generator_0]
+    #     set_property -dict [list CONFIG.Programmable_Full_Type {No_Programmable_Full_Threshold}\
+    #                             CONFIG.Programmable_Empty_Type {Single_Programmable_Empty_Threshold_Constant}\
+    #                             CONFIG.Empty_Threshold_Assert_Value {5}\
+    #                             CONFIG.Empty_Threshold_Negate_Value {6}] [get_ips fifo_generator_0]
+    # }
 
     # 4.2) clk_wiz_0
-    if {[catch {\
-        create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name clk_wiz_0\
-    } error_msg]} {
-        puts "TCL: Skipping adding already existing an Xilinx IP Core."
-    } else {
-        set_property -dict [list CONFIG.PRIM_SOURCE {Differential_clock_capable_pin}\
-                                CONFIG.PRIM_IN_FREQ {200.000}\
-                                CONFIG.CLKOUT1_DRIVES {BUFG}\
-                                CONFIG.USE_RESET {false}\
-                                CONFIG.CLKIN1_JITTER_PS {50.0}\
-                                CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}\
-                                CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}\
-                                CONFIG.MMCM_CLKIN1_PERIOD {5.000}\
-                                CONFIG.MMCM_CLKIN2_PERIOD {10.0}\
-                                CONFIG.CLKOUT1_JITTER {112.316}\
-                                CONFIG.CLKOUT1_PHASE_ERROR {89.971}] [get_ips clk_wiz_0]
-        set_property -dict [list CONFIG.CLKOUT2_USED {true}\
-                                CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {250.000}\
-                                CONFIG.MMCM_CLKOUT1_DIVIDE {4}\
-                                CONFIG.NUM_OUT_CLKS {2}\
-                                CONFIG.CLKOUT2_JITTER {93.990}\
-                                CONFIG.CLKOUT2_PHASE_ERROR {89.971}] [get_ips clk_wiz_0]
-    }
+    # if {[catch {\
+    #     create_ip -name clk_wiz -vendor xilinx.com -library ip -version 6.0 -module_name clk_wiz_0\
+    # } error_msg]} {
+    #     puts "TCL: Skipping adding already existing an Xilinx IP Core."
+    # } else {
+    #     set_property -dict [list CONFIG.PRIM_SOURCE {Differential_clock_capable_pin}\
+    #                             CONFIG.PRIM_IN_FREQ {200.000}\
+    #                             CONFIG.CLKOUT1_DRIVES {BUFG}\
+    #                             CONFIG.USE_RESET {false}\
+    #                             CONFIG.CLKIN1_JITTER_PS {50.0}\
+    #                             CONFIG.FEEDBACK_SOURCE {FDBK_AUTO}\
+    #                             CONFIG.MMCM_CLKFBOUT_MULT_F {5.000}\
+    #                             CONFIG.MMCM_CLKIN1_PERIOD {5.000}\
+    #                             CONFIG.MMCM_CLKIN2_PERIOD {10.0}\
+    #                             CONFIG.CLKOUT1_JITTER {112.316}\
+    #                             CONFIG.CLKOUT1_PHASE_ERROR {89.971}] [get_ips clk_wiz_0]
+    #     set_property -dict [list CONFIG.CLKOUT2_USED {true}\
+    #                             CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {250.000}\
+    #                             CONFIG.MMCM_CLKOUT1_DIVIDE {4}\
+    #                             CONFIG.NUM_OUT_CLKS {2}\
+    #                             CONFIG.CLKOUT2_JITTER {93.990}\
+    #                             CONFIG.CLKOUT2_PHASE_ERROR {89.971}] [get_ips clk_wiz_0]
+    # }
 
 
     # 5)   * Generate Added Xilinx IP Core Products
-    update_compile_order -fileset sources_1
-    generate_target all [get_files  "${origin_dir}/vivado/$_xil_proj_name_.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci"]
-    generate_target all [get_files  "${origin_dir}/vivado/$_xil_proj_name_.srcs/sources_1/ip/fifo_generator_0/fifo_generator_0.xci"]
+    # update_compile_order -fileset sources_1
+    # generate_target all [get_files  "${origin_dir}/vivado/$_xil_proj_name_.srcs/sources_1/ip/clk_wiz_0/clk_wiz_0.xci"]
+    # generate_target all [get_files  "${origin_dir}/vivado/$_xil_proj_name_.srcs/sources_1/ip/fifo_generator_0/fifo_generator_0.xci"]
 
 
     # Report OK
-    puts "TCL: Adding Xilinx IP Cores Finished Successfully."
+    # puts "TCL: Adding Xilinx IP Cores Finished Successfully."

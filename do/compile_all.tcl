@@ -7,8 +7,16 @@ if [batch_mode] {
     # vmap work work
 
     for {set i 0} {$i < [llength $all_modules]} {incr i} {
-        set filepath [string range [lindex $all_modules $i] 0 end]
-        project addfile $filepath
+        set filepath_modules [string range [lindex $all_modules $i] 0 end]
+        set filepath_correction [concat ${proj_root_dir} ${filepath_modules}]
+        set filepath_correction [string map {" " ""} $filepath_correction]
+        set filepath [string map {"./" "/"} $filepath_correction]
+
+        if {$filepath eq ${proj_root_dir}} {
+            puts "TCL: Ignoring invalid line."
+        } else {
+            project addfile $filepath
+        }
     }
 }
 
@@ -18,10 +26,11 @@ for {set i 0} {$i < [llength $all_modules]} {incr i} {
 
     # Reconstruct the correct normalized path to source files
     set filepath_modules [string range [lindex $all_modules $i] 0 end]
-    set filepath_correction [concat ${proj_root_dir}${filepath_modules}]
+    set filepath_correction [concat ${proj_root_dir} ${filepath_modules}]
+    set filepath_correction [string map {" " ""} $filepath_correction]
+    set filepath [string map {"./" "/"} $filepath_correction]
     puts "TCL: filepath_correction = $filepath_correction"
-    set filepath [string map {" ./" "/"} $filepath_correction]
-    puts "TCL: filepath = $filepath "
+    puts "TCL: filepath = $filepath"
 
     set file_fullname [file tail $filepath]
     puts "TCL: file_fullname = $file_fullname"
@@ -31,8 +40,8 @@ for {set i 0} {$i < [llength $all_modules]} {incr i} {
     puts "TCL: file_lang = $file_lang"
 
     # Check for empty lines
-    if {$filepath eq ""} {
-        puts "TCL: Ignoring empty line."
+    if {$filepath eq ${proj_root_dir}} {
+        puts "TCL: Ignoring invalid line."
     } else {
 
         # Sort files to sim and src libraries, except for verilog files

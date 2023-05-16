@@ -20,6 +20,7 @@ SIM_MAKEFILE = sim.mk
 VITIS_MAKEFILE = vitis.mk
 GIT_MAKEFILE = git.mk
 PACKAGES_MAKEFILE = packages.mk
+REDPITAYA_MAKEFILE = redpitaya.mk
 
 
 # Project author details
@@ -38,7 +39,12 @@ EXTRA ?= none
 
 
 # [make src] Actual top module you are working with
-TOP ?= top_gflow.vhd
+TOP ?= top.vhd
+
+
+
+# Board IP Address (Formerly for Red Pitaya board)
+BOARD_LOCALHOST_URL ?= rp-f07244.local
 
 
 # [make generics] Set names and values for generic variables
@@ -88,8 +94,12 @@ GEN7_VAL ?= -3181.05
 #  Default target
 # -------------------------------------------------------------
 default_target:
-	make py_gui
-
+	make reset
+	make src TOP=top_redpitaya_daq.sv
+	make src TOP=axi4lite_fifo_readout.vhd
+	make board BOARD=redpitaya_stream_z10
+	make all
+	make rp_prog
 
 # -------------------------------------------------------------
 #  "project_specific.mk" targets
@@ -361,3 +371,35 @@ install_all_pkg:
 	$(MAKE) -f $(PACKAGES_MAKEFILE) $@
 upgrade_all_pkg:
 	$(MAKE) -f $(PACKAGES_MAKEFILE) $@
+
+
+# -------------------------------------------------------------
+#  "redpitaya.mk" targets
+# -------------------------------------------------------------
+winget_install_putty:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_inspect_bitfile:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_terminal:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_load_bitfile:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_program:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_clean_bitfile:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_prog:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_read:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)
+rp_stream:
+	$(MAKE) -f $(REDPITAYA_MAKEFILE) $@ \
+		BOARD_LOCALHOST_URL=$(BOARD_LOCALHOST_URL)

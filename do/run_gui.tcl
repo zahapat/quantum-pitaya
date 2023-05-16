@@ -17,11 +17,11 @@ if {$lib_sim_vhdl eq "work"} {
 
 # NEW
 set tb_top_abspath [string range [lindex $all_modules [expr [llength $all_modules]-1]] 0 end]
-set filepath_correction [concat ${proj_root_dir}${tb_top_abspath}]
-puts "TCL: filepath_correction = $filepath_correction"
-set tb_top_dir_abspath [string map {" ./" "/"} $filepath_correction]
-puts "TCL: tb_top_dir_abspath = $tb_top_dir_abspath "
+set filepath_correction [concat ${proj_root_dir} ${tb_top_abspath}]
+set filepath_correction [string map {" " ""} $filepath_correction]
+set tb_top_dir_abspath [string map {"./" "/"} $filepath_correction]
 set tb_top_dir_abspath [file dirname "[file normalize $tb_top_dir_abspath]"]
+puts "TCL: tb_top_dir_abspath: $tb_top_dir_abspath"
 
 
 # Check if harness module is used

@@ -12,7 +12,7 @@ if {![file exist "$required_file"]} {
     project compileall
     exit
 } else {
-    puts "TCL: Simulation is running in a non-project mode."
+    puts "TCL: Simulation is running in non-project mode."
 }
 
 # Find wave.do file in the top tb module dir

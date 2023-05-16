@@ -209,6 +209,7 @@ clean : ./vivado/$(PROJ_NAME).xpr
 	rm -r ./.Xil
 	rm *.str
 	rm *.tmp
+	rm *.log
 	$(VIVADO_BINPATH)/vivado.bat -nolog -nojou -mode batch -source ./tcl/generic/vivado/make_clean.tcl -notrace -tclargs $(LIB_SRC) $(LIB_SIM)
 
 

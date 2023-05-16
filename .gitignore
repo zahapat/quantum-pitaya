@@ -17,7 +17,9 @@ build_x64
 *.pdf
 *.gdb
 *.str
+*.log
 
+transcript
 
 ip/*
 

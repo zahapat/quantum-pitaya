@@ -21,18 +21,22 @@ set vivado_added_scripts_report [open $vivado_added_scripts_report_path "a"]
 # -------------------------------------------------------
 #    * Vivado
 add_files -fileset "sources_1" -norecurse {\
-    ./modules/axis_adc_read/hdl/axis_adc_read.v\
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq.sv\
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq_wrapper.vhd\
 }
-set_property library "lib_src" [get_files {\
-    ./modules/axis_adc_read/hdl/axis_adc_read.v\
-}]
+# set_property library "lib_src" [get_files {\
+#     ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq.sv\
+#     ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq_wrapper.vhd\
+# }]
 puts -nonewline $vivado_added_hdl_report "\
-    ./modules/axis_adc_read/hdl/axis_adc_read.v\n"
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq.sv\n
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq_wrapper.vhd\n"
 update_compile_order -fileset sources_1
 
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/axis_adc_read/hdl/axis_adc_read.v\n"
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq.sv\n
+    ./modules/top_redpitaya_daq/hdl/top_redpitaya_daq_wrapper.vhd\n"
 
 
 # -------------------------------------------------------
@@ -46,7 +50,7 @@ puts -nonewline $simulator_comporder "\
 # -------------------------------------------------------
 #    * ModelSim
 puts -nonewline $simulator_comporder "\
-    ./modules/axis_adc_read/sim/axis_adc_read_tb.v\n"
+    ./modules/top_redpitaya_daq/sim/top_redpitaya_daq_tb.sv\n"
 
 
 
