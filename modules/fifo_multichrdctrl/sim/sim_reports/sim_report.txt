@@ -1,0 +1,66 @@
+
+SIMULATION REPORT          Generated on Mon Aug 21 00:25:41 2023
+
+
+Design simulated: C:/Git/zahapat/FQEnv/simulator/unisim_verilog.glbl C:/Git/zahapat/FQEnv/simulator/unisim_verilog.fifo_multichrdctrl_tb
+Number of signals/nets in design: 573
+Number of processes in design: 305
+Number of instances from user libraries in design: 8
+Number of executable statements in design: 653
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/FQEnv/simulator
+    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Module: fifo_ring , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_ring/hdl/fifo_ring.sv
+    Occurrences: 5
+
+    Module: fifo_multichrdctrl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_multichrdctrl/hdl/fifo_multichrdctrl.sv
+    Occurrences: 1
+
+    Module: fifo_rdselector , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_rdselector/hdl/fifo_rdselector.sv
+    Occurrences: 1
+
+    Module: fifo_multichannel , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_multichannel/hdl/fifo_multichannel.sv
+    Occurrences: 1
+
+    Module: fifo_wrselector , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_wrselector/hdl/fifo_wrselector.sv
+    Occurrences: 1
+
+    Module: fifo_accumulator , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_accumulator/hdl/fifo_accumulator.sv
+    Occurrences: 1
+
+    Module: fifo_multichrdctrl_tb , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_multichrdctrl/sim/fifo_multichrdctrl_tb.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: glbl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/glbl.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+

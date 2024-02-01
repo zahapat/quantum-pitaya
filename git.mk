@@ -3,13 +3,13 @@
 # -------------------------------------------------------------
 #  Mandatory variables
 PROJ_NAME = $(shell basename $(CURDIR))
-PROJ_DIR = $(shell pwd)
+PROJ_DIR = $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 #  "git.mk" variables
 GIT_MAKEFILE = git.mk
 GIT_ACCOUNT = zahapat
 GIT_EMAIL ?= zahalka.patrik@gmail.com
-GIT_TEMPLATE ?= fpga-tools-qc
+GIT_TEMPLATE ?= SQD-FQEnv
 GIT_TEMPLATE_HTTPS ?= https://github.com/$(GIT_ACCOUNT)/$(GIT_TEMPLATE).git
 GIT_PROJECT_HTTPS ?= https://github.com/$(GIT_ACCOUNT)/$(PROJ_NAME).git
 GIT_BRANCH ?= main

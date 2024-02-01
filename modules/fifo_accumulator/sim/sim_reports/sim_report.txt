@@ -1,0 +1,56 @@
+
+SIMULATION REPORT          Generated on Sun Oct 15 17:49:43 2023
+
+
+Design simulated: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog.glbl C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog.fifo_accumulator_tb
+Number of signals/nets in design: 495
+Number of processes in design: 239
+Number of instances from user libraries in design: 6
+Number of executable statements in design: 471
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/SQD-FQEnv/simulator
+    Project file: C:/Git/zahapat/SQD-FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Module: fifo_ring , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_ring/hdl/fifo_ring.sv
+    Occurrences: 5
+
+    Module: fifo_wrselector , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_wrselector/hdl/fifo_wrselector.sv
+    Occurrences: 1
+
+    Module: fifo_accumulator , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_accumulator/hdl/fifo_accumulator.sv
+    Occurrences: 1
+
+    Module: fifo_accumulator_tb , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_accumulator/sim/fifo_accumulator_tb.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: glbl , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/glbl.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Module: fifo_multichannel , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_multichannel/hdl/fifo_multichannel.sv
+    Occurrences: 1
+

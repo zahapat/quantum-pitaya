@@ -1,0 +1,188 @@
+
+SIMULATION REPORT          Generated on Fri Sep 01 00:21:26 2023
+
+
+Design simulated: C:/Git/zahapat/FQEnv/simulator/unisim_verilog.glbl C:/Git/zahapat/FQEnv/simulator/unisim_verilog.top_redpitaya_daq_tb
+Number of signals/nets in design: 2055
+Number of processes in design: 1463
+Number of instances from user libraries in design: 25
+Number of executable statements in design: 5268
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/FQEnv/simulator
+    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Module: fifo_wrselector , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_wrselector/hdl/fifo_wrselector.sv
+    Occurrences: 2
+
+    Module: BUFG , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/unisims/BUFG.v
+    Timescale: 1ps / 1ps
+    Occurrences: 5
+
+    Module: adc_read , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/adc_read/hdl/adc_read.v
+    Timescale: 1ns / 1ns
+    Occurrences: 2
+
+    Module: fir_parallel , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel.sv
+    Timescale: 1ns / 100ps
+    Occurrences: 2
+
+    Module: fifo_ring , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_ring/hdl/fifo_ring.sv
+    Occurrences: 4
+
+    Module: averager , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/averager/hdl/averager.sv
+    Timescale: 1ns / 100ps
+    Occurrences: 2
+
+    Module: ODDR (cell) , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/unisims/ODDR.v
+    Timescale: 1ps / 1ps
+    Occurrences: 16
+
+    Module: fifo_accumulator , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_accumulator/hdl/fifo_accumulator.sv
+    Occurrences: 2
+
+    Module: fifo_read_gray_ctrl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_read_gray_ctrl.v
+    Timescale: 1ns / 1ns
+    Occurrences: 4
+
+    Module: fifo_write_gray_ctrl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_write_gray_ctrl.v
+    Timescale: 1ns / 1ns
+    Occurrences: 4
+
+    Module: fifo_cdcc , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_cdcc.v
+    Timescale: 1ns / 1ns
+    Occurrences: 4
+
+    Entity: async_patterndetect , acc : <novopt>
+    Architecture: rtl
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/async_patterndetect/hdl/async_patterndetect.vhd
+    Occurrences: 2
+
+    Module: fifo_multichrdctrl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_multichrdctrl/hdl/fifo_multichrdctrl.sv
+    Occurrences: 2
+
+    Module: fifo_rdselector , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_rdselector/hdl/fifo_rdselector.sv
+    Occurrences: 2
+
+    Module: fifo_multichannel , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fifo_multichannel/hdl/fifo_multichannel.sv
+    Occurrences: 2
+
+    Module: fsm_rxcmdparser , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fsm_rxcmdparser/hdl/fsm_rxcmdparser.sv
+    Occurrences: 1
+
+    Module: dac_dual_iq , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/dac_dual_iq/hdl/dac_dual_iq.sv
+    Timescale: 1ns / 1ps
+    Occurrences: 1
+
+    Package: standard
+    Library: C:/intelFPGA/20.1/modelsim_ase/std
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/std/standard.vhd
+    Occurrences: 1
+
+    Module: fir_parallel_sv_unit , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel.sv
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel_coeff.svh
+    Timescale: 1ns / 100ps
+    Occurrences: 1
+
+    Module: ddc , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/ddc/hdl/ddc.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: dsp_path , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/dsp_path/hdl/dsp_path.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Package Body: textio
+    Library: C:/intelFPGA/20.1/modelsim_ase/std
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/std/textio.vhd
+    Occurrences: 1
+
+    Module: MMCME2_ADV (cell) , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/unisims/MMCME2_ADV.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Module: clock_synthesizer , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/clock_synthesizer/hdl/clock_synthesizer.sv
+    Timescale: 1ns / 1ps
+    Occurrences: 1
+
+    Package Body: std_logic_1164
+    Library: C:/intelFPGA/20.1/modelsim_ase/ieee
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/ieee/stdlogic.vhd
+    Occurrences: 1
+
+    Module: top_redpitaya_daq , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/top_redpitaya_daq/hdl/top_redpitaya_daq.sv
+    Timescale: 1ns / 1ps
+    Occurrences: 1
+
+    Module: top_redpitaya_daq_tb , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/top_redpitaya_daq/sim/top_redpitaya_daq_tb.sv
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: glbl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/glbl.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Package Body: numeric_std
+    Library: C:/intelFPGA/20.1/modelsim_ase/ieee
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/ieee/mti_numeric_std.vhd
+    Occurrences: 1
+

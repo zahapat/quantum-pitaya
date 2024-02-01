@@ -21,8 +21,10 @@ module fifo_write_gray_ctrl
 
 
     // Declare signals & initial conditions
-    reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_ptr = {INT_FIFO_PTR_BITS_CNT+1{1'b0}};
-    reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_grayptr = {INT_FIFO_PTR_BITS_CNT+1{1'b0}};
+    // reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_ptr = {INT_FIFO_PTR_BITS_CNT+1{1'b0}};
+    reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_ptr = 0;
+    // reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_grayptr = {INT_FIFO_PTR_BITS_CNT+1{1'b0}};
+    reg[INT_FIFO_PTR_BITS_CNT:0] reg_head_grayptr = 0;
     
     // Int and Gray Pointers
     wire[INT_FIFO_PTR_BITS_CNT:0] reg_head_grayptr_next;
@@ -39,6 +41,8 @@ module fifo_write_gray_ctrl
 
     assign reg_head_ptr_next 
         = (ready_flag == 1'b1 && i_valid == 1'b1) ? reg_head_ptr + 1 : reg_head_ptr;
+        // = (i_valid == 1'b1) ? reg_head_ptr + 1 : reg_head_ptr;
+        // = (ready_flag == 1'b1) ? reg_head_ptr + 1 : reg_head_ptr;
 
     assign reg_head_grayptr_next 
         = reg_head_ptr ^ (reg_head_ptr >> 1);
@@ -52,7 +56,8 @@ module fifo_write_gray_ctrl
             reg_head_ptr <= {(INT_FIFO_PTR_BITS_CNT+1){1'b0}};
         end else begin
             // Pass incremented values on data valid
-            if (ready_flag == 1'b1 && i_valid == 1'b1) begin
+            // if (ready_flag == 1'b1 && i_valid == 1'b1) begin
+            if (i_valid == 1'b1) begin
                 reg_head_ptr <= reg_head_ptr_next;
             end
         end

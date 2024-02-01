@@ -1,0 +1,60 @@
+
+SIMULATION REPORT          Generated on Fri Oct 20 11:32:06 2023
+
+
+Design simulated: C:/Git/zahapat/SQD-FQEnv/simulator/work.async_patterndetect_tb(sim)
+Number of signals/nets in design: 272
+Number of processes in design: 17
+Number of instances from user libraries in design: 4
+Number of executable statements in design: 559
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/SQD-FQEnv/simulator
+    Project file: modelsim.ini
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Package Body: math_real
+    Library: C:/intelFPGA/20.1/modelsim_ase/ieee
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/ieee/1076-2code.vhd
+    Occurrences: 1
+
+    Package Body: numeric_std
+    Library: C:/intelFPGA/20.1/modelsim_ase/ieee
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/ieee/mti_numeric_std.vhd
+    Occurrences: 1
+
+    Package Body: std_logic_1164
+    Library: C:/intelFPGA/20.1/modelsim_ase/ieee
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/ieee/stdlogic.vhd
+    Occurrences: 1
+
+    Package Body: textio
+    Library: C:/intelFPGA/20.1/modelsim_ase/std
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/std/textio.vhd
+    Occurrences: 1
+
+    Package: standard
+    Library: C:/intelFPGA/20.1/modelsim_ase/std
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/std/standard.vhd
+    Occurrences: 1
+
+    Entity: async_patterndetect_tb , acc : <novopt>
+    Architecture: sim
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/work
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/async_patterndetect/sim/async_patterndetect_tb.vhd
+    Occurrences: 1
+
+    Entity: async_patterndetect , acc : <novopt>
+    Architecture: rtl
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/work
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/async_patterndetect/hdl/async_patterndetect.vhd
+    Occurrences: 1
+
+    Package Body: env
+    Library: C:/intelFPGA/20.1/modelsim_ase/std
+    Source File: C:/intelFPGA/20.1/modelsim_ase/win32aloem/../vhdl_src/std/env.vhd
+    Occurrences: 1
+

@@ -1,1 +1,0 @@
-puts $new_file_sim "    // SystemVerilog UVM: An agent is a container class consists a driver, a sequencer, and a monitor."

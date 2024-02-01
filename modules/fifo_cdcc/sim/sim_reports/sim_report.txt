@@ -1,37 +1,37 @@
 
-SIMULATION REPORT          Generated on Sun May 14 19:35:50 2023
+SIMULATION REPORT          Generated on Fri Oct 13 21:18:20 2023
 
 
-Design simulated: C:/Git/zahapat/FQEnv/simulator/work.fifo_cdcc_tb
-Number of signals/nets in design: 164
-Number of processes in design: 37
-Number of instances from user libraries in design: 4
-Number of executable statements in design: 274
+Design simulated: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog.glbl C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog.fifo_cdcc_tb
+Number of signals/nets in design: 187
+Number of processes in design: 47
+Number of instances from user libraries in design: 5
+Number of executable statements in design: 310
 
 Simulator Parameters:
 
-    Current directory: C:/Git/zahapat/FQEnv/simulator
-    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Current directory: C:/Git/zahapat/SQD-FQEnv/simulator
+    Project file: C:/Git/zahapat/SQD-FQEnv/simulator/project.mpf
     Project root directory: .
-    Simulation time resolution: 1ns
+    Simulation time resolution: 1ps
 
 List of Design units used:
 
     Module: fifo_write_gray_ctrl , acc : <novopt>
-    Library: C:/Git/zahapat/FQEnv/simulator/work
-    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_write_gray_ctrl.v
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_cdcc/hdl/fifo_write_gray_ctrl.v
     Timescale: 1ns / 1ns
     Occurrences: 1
 
     Module: fifo_cdcc , acc : <novopt>
-    Library: C:/Git/zahapat/FQEnv/simulator/work
-    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_cdcc.v
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_cdcc/hdl/fifo_cdcc.v
     Timescale: 1ns / 1ns
     Occurrences: 1
 
     Module: fifo_cdcc_tb , acc : <novopt>
-    Library: C:/Git/zahapat/FQEnv/simulator/work
-    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/sim/fifo_cdcc_tb.sv
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_cdcc/sim/fifo_cdcc_tb.sv
     Timescale: 1ns / 1ns
     Occurrences: 1
 
@@ -40,9 +40,15 @@ List of Design units used:
     Source File: $MODEL_TECH/../verilog_src/std/std.sv
     Occurrences: 1
 
+    Module: glbl , acc : <novopt>
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/glbl.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
     Module: fifo_read_gray_ctrl , acc : <novopt>
-    Library: C:/Git/zahapat/FQEnv/simulator/work
-    Source File: C:/Git/zahapat/FQEnv/modules/fifo_cdcc/hdl/fifo_read_gray_ctrl.v
+    Library: C:/Git/zahapat/SQD-FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/SQD-FQEnv/modules/fifo_cdcc/hdl/fifo_read_gray_ctrl.v
     Timescale: 1ns / 1ns
     Occurrences: 1
 

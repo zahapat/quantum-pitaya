@@ -1,0 +1,36 @@
+
+SIMULATION REPORT          Generated on Mon Jun 05 14:34:39 2023
+
+
+Design simulated: C:/Git/zahapat/FQEnv/simulator/work.rom_oscillator_cos_tb
+Number of signals/nets in design: 2
+Number of processes in design: 9
+Number of instances from user libraries in design: 2
+Number of executable statements in design: 70
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/FQEnv/simulator
+    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 100ps
+
+List of Design units used:
+
+    Module: rom_oscillator_cos_tb , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/rom_oscillator_cos/sim/rom_oscillator_cos_tb.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: rom_oscillator_cos , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/rom_oscillator_cos/hdl/rom_oscillator_cos.sv
+    Timescale: 1ns / 100ps
+    Occurrences: 1
+

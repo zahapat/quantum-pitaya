@@ -1,0 +1,41 @@
+
+SIMULATION REPORT          Generated on Thu Jul 20 15:27:39 2023
+
+
+Design simulated: C:/Git/zahapat/FQEnv/simulator/unisim_verilog.glbl C:/Git/zahapat/FQEnv/simulator/unisim_verilog.ring_buffer_tb
+Number of signals/nets in design: 59
+Number of processes in design: 43
+Number of instances from user libraries in design: 3
+Number of executable statements in design: 190
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/FQEnv/simulator
+    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Module: ring_buffer_tb , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/ring_buffer/sim/ring_buffer_tb.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: glbl , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Xilinx/Vivado/2020.2/data/verilog/src/glbl.v
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Module: ring_buffer , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/unisim_verilog
+    Source File: C:/Git/zahapat/FQEnv/modules/ring_buffer/hdl/ring_buffer.sv
+    Occurrences: 1
+

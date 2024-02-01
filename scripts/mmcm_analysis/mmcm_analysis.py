@@ -5,6 +5,7 @@
 #       - For more information, read more about how this file works in the following file:
 #         https://www.xilinx.com/support/documents/user_guides/ug572-ultrascale-clocking.pdf#page=35&zoom=100,121,266
 
+
 # Import libraries
 from math import ceil, floor
 from numpy import arange
@@ -84,13 +85,18 @@ def print_mmcm_parameters (
     # Set initial conditions
     set_d = False
     set_m = False
-    set_d_to = 0
+    set_d_to = 1
     set_m_to = 0
     outputs_found = 0
     actual_req_frequency = list_clkoutx_MHz[0]
     max_acceptable_absdifference_for_targetfreq = list_clkoutx_abs_tolerance_MHz[0]
 
     # Prerequisites for the MMCM2_ADV:
+    # [Netlist 29-72] Incorrect value '118.750000' specified for property 'CLKFBOUT_MULT_F'. 
+    # Expecting type 'double' with possible values of '2 to 64'. 
+    # The system will either use the default value or the property value will be dropped. 
+    # Please verify your source files
+    range_max_multiply = 64
     range_max_output_divide = 128
     decrement_output_divide = 0.125
     
@@ -102,12 +108,14 @@ def print_mmcm_parameters (
     if (related_outputs != 0):
         decrement_output_divide = 1
 
+    # Set the following boolean values
     # Set to True if you want to stop the search after the first acceptable found or exactfreq
     stop_after_first_acceptable = False
-    stop_after_first_exactfeq = True
+    # stop_after_first_exactfeq = True
+    stop_after_first_exactfeq = False
     # Set to True only if the best phase offset granularity.precision is required (TODO)
 
-    # Set the following boolean values
+    
     max_acceptable_absdifference_for_targetfreq = list_clkoutx_abs_tolerance_MHz[0]
 
     # ----- Do not touch: Variables for selecting the best and closest target frequency -----
@@ -118,7 +126,7 @@ def print_mmcm_parameters (
     f_clkout_MHz_closest_freq_d = 0
     f_clkout_MHz_closest_freq_m = 0
     f_clkout_MHz_closest_freq_o = 0
-    found_best_exactfreq = [False for i in range(outputs_cnt)] # Will be set to if the first acceptable is found
+    found_best_exactfreq = [False for i in range(outputs_cnt)] # Will be set to True if the first acceptable is found
     found_best_acceptable = [False for i in range(outputs_cnt)] # Will be set to True if the out frequency exactly matches the desired frequency
     found_closest_possible = [False for i in range(outputs_cnt)] # Will be set to True if the max iteration in the 'o' for loop is reached
     f_clkout_MHz_minoffset_deg = 999999
@@ -129,31 +137,40 @@ def print_mmcm_parameters (
     # Master division value (1-106)
     master_divide_absmin = ceil(f_clkin1_MHz/f_pfd_max_MHz)
     master_divide_absmax = floor(f_clkin1_MHz/f_pfd_min_MHz)
-    # print("PY: DIVCLK_DIVIDE_absmin = ", master_divide_absmin)
-    # print("PY: DIVCLK_DIVIDE_absmax = ", master_divide_absmax)
+    print("PY: DIVCLK_DIVIDE_absmin = ", master_divide_absmin)
+    print("PY: DIVCLK_DIVIDE_absmax = ", master_divide_absmax)
 
     # Print out the ideal master multiply value
     # Multiply value for all CLKOUTx (2.000-64.000).
     master_multiply_absmin = ceil(master_divide_absmin * f_vco_min_MHz/f_clkin1_MHz)
     master_multiply_absmax = floor(master_divide_absmax * f_vco_max_MHz/f_clkin1_MHz)
-    # print("PY: CLKFBOUT_MULT_F_absmin = ", master_multiply_absmin)
-    # print("PY: CLKFBOUT_MULT_F_absmax = ", master_multiply_absmax)
+    # print("PY: master_multiply_absmin = ", master_multiply_absmin)
+    # print("PY: master_multiply_absmax = ", master_multiply_absmax)
 
     if(outputs_cnt > 0):
         d = master_divide_absmin
         while (d <= master_divide_absmax):
             # for d in range(master_divide_absmin, master_divide_absmax+1):
-            # print("PY: d = ", d)
+            print("PY: LOOP d = ", d)
             master_multiply_currentmin = d * f_vco_min_MHz/f_clkin1_MHz
             master_multiply_currentmin = ceil(master_multiply_currentmin/0.125) * 0.125
             master_multiply_currentmax = d * f_vco_max_MHz/f_clkin1_MHz
             master_multiply_currentmax = floor(master_multiply_currentmax/0.125) * 0.125
 
+            # print("DEBUG = master_multiply_currentmin = ", master_multiply_currentmin)
+            # print("DEBUG = master_multiply_currentmax = ", master_multiply_currentmax)
             m = master_multiply_currentmax
+
+            # Correct if the 'master_multiply_currentmax' the allowed range
+            if (master_multiply_currentmax > range_max_multiply):
+                m = range_max_multiply
+
             while (m > master_multiply_currentmin-decrement_master_multiply):
+                print("PY: LOOP m = ", m)
 
                 o = range_max_output_divide
                 while (o > 1-decrement_output_divide):
+                    # print("PY: LOOP o = ", o)
 
                     # for m in arange(master_multiply_currentmax, master_multiply_currentmin-decrement_master_multiply, -decrement_master_multiply):
                     f_clkout_MHz_actual_vcofreq = f_clkin1_MHz * (m/d)
@@ -198,23 +215,23 @@ def print_mmcm_parameters (
                         # If best D,M,O values found for the exact target frequency
                         if (f_clkout_MHz_actual_freq_absdifference_targetfreq == 0):
                             if (found_best_exactfreq[outputs_found] == True):
+                                print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: INFO: D,M,O values for the EXACT target frequency with requirements: ", actual_req_frequency, " MHz")
                                 pass
-                                # print("PY: --------------------------------------------------------------------------------------------")
-                                # print("PY: INFO: D,M,O values for the EXACT target frequency with requirements: ", actual_req_frequency, " MHz")
                             else:
                                 found_best_exactfreq[outputs_found] = True
-                                # print("PY: --------------------------------------------------------------------------------------------")
-                                # print("PY: INFO: BEST D,M,O values for the EXACT target frequency with requirements: ", actual_req_frequency, " MHz")
+                                print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: INFO: BEST D,M,O values for the EXACT target frequency with requirements: ", actual_req_frequency, " MHz")
                         else:
                             # If acceptable D,M,O values found for the desired frequency
                             if (found_best_acceptable[outputs_found] == True):
+                                print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: INFO: D,M,O values for the APPROXIMATE target frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
                                 pass
-                                # print("PY: --------------------------------------------------------------------------------------------")
-                                # print("PY: INFO: D,M,O values for the APPROXIMATE target frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
                             else:
                                 found_best_acceptable[outputs_found] = True
-                                # print("PY: --------------------------------------------------------------------------------------------")
-                                # print("PY: INFO: BEST D,M,O values for the APPROXIMATE target frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
+                                print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: INFO: BEST D,M,O values for the APPROXIMATE target frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
 
                         # Try to find parameters D,M,O for the finiest possible offset throughout the entire search
                         if(f_clkout_MHz_minoffset_deg > f_clkout_MHz_actual_static_phase_offset_deg):
@@ -232,14 +249,14 @@ def print_mmcm_parameters (
                             f_clkout_MHz_minoffset_freq_o = f_actual_o
 
                         # Print out the actual values
-                        # print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_actual_freq)
-                        # print("PY:       DIVCLK_DIVIDE                = ", d)
-                        # print("PY:       CLKFBOUT_MULT_F              = ", f_actual_m)
-                        # print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_actual_o)
-                        # print("PY:         *VCO Frequency             = ", f_clkout_MHz_actual_vcofreq)
-                        # print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_actual_freq_absdifference_targetfreq)
-                        # print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_static_phase_shift_ps)
-                        # print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_actual_static_phase_offset_deg)
+                        print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_actual_freq)
+                        print("PY:       DIVCLK_DIVIDE                = ", d)
+                        print("PY:       CLKFBOUT_MULT_F              = ", f_actual_m)
+                        print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_actual_o)
+                        print("PY:         *VCO Frequency             = ", f_clkout_MHz_actual_vcofreq)
+                        print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_actual_freq_absdifference_targetfreq)
+                        print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_static_phase_shift_ps)
+                        print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_actual_static_phase_offset_deg)
 
                         # Save status and output values
                         list_output_params_and_status[outputs_found][0] = found_best_exactfreq[outputs_found]
@@ -302,17 +319,17 @@ def print_mmcm_parameters (
                             found_closest_possible[outputs_found] = True
                             # print("PY: outputs_found 2= ", outputs_found)
                             # Print the closest freq if requirements not met
-                            # print("PY: --------------------------------------------------------------------------------------------")
-                            # print("PY: INFO: Closest D,M,O values found to synthesize the desired frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
-                            # print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_closest_freq)
-                            # print("PY:       DIVCLK_DIVIDE                = ", f_clkout_MHz_closest_freq_d)
-                            # print("PY:       CLKFBOUT_MULT_F              = ", f_clkout_MHz_closest_freq_m)
-                            # print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_clkout_MHz_closest_freq_o)
-                            # print("PY:         *VCO Frequency             = ", f_clkout_MHz_closest_freq_vcofreq)
-                            # print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_closest_freq_absdifference)
-                            # print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_closest_static_phase_shift_ps)
-                            # print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_closest_static_phase_offset_deg)
-                            # print("PY: --------------------------------------------------------------------------------------------")
+                            print("PY: --------------------------------------------------------------------------------------------")
+                            print("PY: INFO: Closest D,M,O values found to synthesize the desired frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
+                            print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_closest_freq)
+                            print("PY:       DIVCLK_DIVIDE                = ", f_clkout_MHz_closest_freq_d)
+                            print("PY:       CLKFBOUT_MULT_F              = ", f_clkout_MHz_closest_freq_m)
+                            print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_clkout_MHz_closest_freq_o)
+                            print("PY:         *VCO Frequency             = ", f_clkout_MHz_closest_freq_vcofreq)
+                            print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_closest_freq_absdifference)
+                            print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_closest_static_phase_shift_ps)
+                            print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_closest_static_phase_offset_deg)
+                            print("PY: --------------------------------------------------------------------------------------------")
 
                             # Save status and output values
                             list_output_params_and_status[outputs_found][0] = found_best_exactfreq[outputs_found]
@@ -373,17 +390,17 @@ def print_mmcm_parameters (
                                 # return
                                 found_closest_possible[outputs_found] = True
 
-                                # print("PY: --------------------------------------------------------------------------------------------")
-                                # print("PY: INFO: FAILED to find M,D,O parameters for the desired frequency with requirements, but the closest are: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
-                                # print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_closest_freq)
-                                # print("PY:       DIVCLK_DIVIDE                = ", f_clkout_MHz_closest_freq_d)
-                                # print("PY:       CLKFBOUT_MULT_F              = ", f_clkout_MHz_closest_freq_m)
-                                # print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_clkout_MHz_closest_freq_o)
-                                # print("PY:         *VCO Frequency             = ", f_clkout_MHz_closest_freq_vcofreq)
-                                # print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_closest_freq_absdifference)
-                                # print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_closest_static_phase_shift_ps)
-                                # print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_closest_static_phase_offset_deg)
-                                # print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: --------------------------------------------------------------------------------------------")
+                                print("PY: INFO: FAILED to find M,D,O parameters for the desired frequency with requirements, but the closest are: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
+                                print("PY:       CLKOUTx (MHz)                = ", f_clkout_MHz_closest_freq)
+                                print("PY:       DIVCLK_DIVIDE                = ", f_clkout_MHz_closest_freq_d)
+                                print("PY:       CLKFBOUT_MULT_F              = ", f_clkout_MHz_closest_freq_m)
+                                print("PY:       CLKOUTx_DIVIDE(_F)           = ", f_clkout_MHz_closest_freq_o)
+                                print("PY:         *VCO Frequency             = ", f_clkout_MHz_closest_freq_vcofreq)
+                                print("PY:         *MHz to Target Frequency   = ", f_clkout_MHz_closest_freq_absdifference)
+                                print("PY:         *Static Phase Shift (ps)   = ", f_clkout_MHz_closest_static_phase_shift_ps)
+                                print("PY:         *Static Phase Offset (deg) = integer multiple of ", f_clkout_MHz_closest_static_phase_offset_deg)
+                                print("PY: --------------------------------------------------------------------------------------------")
                                 # Save status and output values
                                 list_output_params_and_status[outputs_found][0] = found_best_exactfreq[outputs_found]
                                 list_output_params_and_status[outputs_found][1] = found_best_acceptable[outputs_found]
@@ -450,6 +467,8 @@ def print_mmcm_parameters (
                     # update the 'o' while loop variable
                     o = o - decrement_output_divide
 
+
+
                 # Break on acceptable or exactfreq requirement
                 # print("PY: outputs_found 4= ", outputs_found)
                 if set_m == True:
@@ -459,11 +478,14 @@ def print_mmcm_parameters (
                 else:
                     m = m - decrement_master_multiply
 
+                # Causes crash if commented
                 if(outputs_found >= outputs_cnt):
                     break
-                if(stop_after_first_acceptable or stop_after_first_exactfeq or found_closest_possible[outputs_found]):
-                    if(found_best_acceptable[outputs_found] or found_best_exactfreq[outputs_found] or found_closest_possible[outputs_found]):
-                        break
+                else:
+                    if(stop_after_first_acceptable or stop_after_first_exactfeq or found_closest_possible[outputs_found]):
+                        if(found_best_acceptable[outputs_found] or found_best_exactfreq[outputs_found] or found_closest_possible[outputs_found]):
+                            break
+
 
             # Break on acceptable or exactfreq requirement
             if set_d == True:
@@ -476,37 +498,39 @@ def print_mmcm_parameters (
 
             if(outputs_found >= outputs_cnt):
                 break
-            if(stop_after_first_acceptable or stop_after_first_exactfeq or found_closest_possible[outputs_found]):
-                if(found_best_acceptable[outputs_found] or found_best_exactfreq[outputs_found] or found_closest_possible[outputs_found]):
-                    break
+            else:
+                if(stop_after_first_acceptable or stop_after_first_exactfeq or found_closest_possible[outputs_found]):
+                    if(found_best_acceptable[outputs_found] or found_best_exactfreq[outputs_found] or found_closest_possible[outputs_found]):
+                        break
+
 
         # Print the closest freq if requirements not met
         # Break on acceptable or exactfreq requirement
-        # if((stop_after_first_acceptable == False) or (stop_after_first_exactfeq == False) or (found_closest_possible == False)):
-        #     print("PY: --------------------------------------------------------------------------------------------")
-        #     print("PY: INFO: Closest D,M,O values found to synthesize the desired frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
-        #     print("PY:       f_clkout_MHz_closest_freq                  = ", f_clkout_MHz_closest_freq)
-        #     print("PY:       f_clkout_MHz_closest_freq_vcofreq          = ", f_clkout_MHz_closest_freq_vcofreq)
-        #     print("PY:       f_clkout_MHz_closest_freq_d                = ", f_clkout_MHz_closest_freq_d)
-        #     print("PY:       f_clkout_MHz_closest_freq_m                = ", f_clkout_MHz_closest_freq_m)
-        #     print("PY:       f_clkout_MHz_closest_freq_o                = ", f_clkout_MHz_closest_freq_o)
-        #     print("PY:       f_clkout_MHz_closest_freq_absdifference    = ", f_clkout_MHz_closest_freq_absdifference)
-        #     print("PY:       f_clkout_MHz_closest_static_phase_shift_ps = ", f_clkout_MHz_closest_static_phase_shift_ps)
-        #     print("PY:       f_clkout_MHz_closest_static_phase_offset   = ", f_clkout_MHz_closest_static_phase_offset_deg)
-        #     print("PY: --------------------------------------------------------------------------------------------")
+        if((stop_after_first_acceptable == False) or (stop_after_first_exactfeq == False) or (found_closest_possible == False)):
+            print("PY: --------------------------------------------------------------------------------------------")
+            print("PY: INFO: Closest D,M,O values found to synthesize the desired frequency with requirements: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
+            print("PY:       f_clkout_MHz_closest_freq                  = ", f_clkout_MHz_closest_freq)
+            print("PY:       f_clkout_MHz_closest_freq_vcofreq          = ", f_clkout_MHz_closest_freq_vcofreq)
+            print("PY:       f_clkout_MHz_closest_freq_d                = ", f_clkout_MHz_closest_freq_d)
+            print("PY:       f_clkout_MHz_closest_freq_m                = ", f_clkout_MHz_closest_freq_m)
+            print("PY:       f_clkout_MHz_closest_freq_o                = ", f_clkout_MHz_closest_freq_o)
+            print("PY:       f_clkout_MHz_closest_freq_absdifference    = ", f_clkout_MHz_closest_freq_absdifference)
+            print("PY:       f_clkout_MHz_closest_static_phase_shift_ps = ", f_clkout_MHz_closest_static_phase_shift_ps)
+            print("PY:       f_clkout_MHz_closest_static_phase_offset   = ", f_clkout_MHz_closest_static_phase_offset_deg)
+            print("PY: --------------------------------------------------------------------------------------------")
 
-        # if((found_best_exactfreq == True) or (found_best_acceptable == True)):
-        #     print("PY: --------------------------------------------------------------------------------------------")
-        #     print("PY: INFO: D,M,O values for the finiest phase offset fexibility for: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
-        #     print("PY:       f_clkout_MHz_minoffset_freq                    = ", f_clkout_MHz_minoffset_freq)
-        #     print("PY:       f_clkout_MHz_minoffset_freq_vcofreq            = ", f_clkout_MHz_minoffset_freq_vcofreq)
-        #     print("PY:       f_clkout_MHz_minoffset_freq_d                  = ", f_clkout_MHz_minoffset_freq_d)
-        #     print("PY:       f_clkout_MHz_minoffset_freq_m                  = ", f_clkout_MHz_minoffset_freq_m)
-        #     print("PY:       f_clkout_MHz_minoffset_freq_o                  = ", f_clkout_MHz_minoffset_freq_o)
-        #     print("PY:       f_clkout_MHz_minoffset_freq_absdifference      = ", f_clkout_MHz_minoffset_freq_absdifference)
-        #     print("PY:       f_clkout_MHz_minoffset_static_phase_shift_ps   = ", f_clkout_MHz_minoffset_static_phase_shift_ps)
-        #     print("PY:       f_clkout_MHz_minoffset_static_phase_offset_deg = ", f_clkout_MHz_minoffset_static_phase_offset_deg)
-        #     print("PY: --------------------------------------------------------------------------------------------")
+        if((found_best_exactfreq == True) or (found_best_acceptable == True)):
+            print("PY: --------------------------------------------------------------------------------------------")
+            print("PY: INFO: D,M,O values for the finiest phase offset fexibility for: ", actual_req_frequency, " ± ", max_acceptable_absdifference_for_targetfreq, " MHz")
+            print("PY:       f_clkout_MHz_minoffset_freq                    = ", f_clkout_MHz_minoffset_freq)
+            print("PY:       f_clkout_MHz_minoffset_freq_vcofreq            = ", f_clkout_MHz_minoffset_freq_vcofreq)
+            print("PY:       f_clkout_MHz_minoffset_freq_d                  = ", f_clkout_MHz_minoffset_freq_d)
+            print("PY:       f_clkout_MHz_minoffset_freq_m                  = ", f_clkout_MHz_minoffset_freq_m)
+            print("PY:       f_clkout_MHz_minoffset_freq_o                  = ", f_clkout_MHz_minoffset_freq_o)
+            print("PY:       f_clkout_MHz_minoffset_freq_absdifference      = ", f_clkout_MHz_minoffset_freq_absdifference)
+            print("PY:       f_clkout_MHz_minoffset_static_phase_shift_ps   = ", f_clkout_MHz_minoffset_static_phase_shift_ps)
+            print("PY:       f_clkout_MHz_minoffset_static_phase_offset_deg = ", f_clkout_MHz_minoffset_static_phase_offset_deg)
+            print("PY: --------------------------------------------------------------------------------------------")
     else:
         print("PY: ERROR: Invalid number of outputs inputted. Make sure you entered 1 to 7 output frequencies.")
         return
@@ -529,13 +553,13 @@ f_pfd_max_MHz = 550
 
 # ----- User Defined Variables -----
 # Input Clock
-f_clkin1_MHz = 125.000
+f_clkin1_MHz = 10.000
 
 # Tolerance for output clocks +/- (MHz)
 list_clkoutx_abs_tolerance_MHz = [
     0.000,
     0.000,
-    0.100,
+    0.000,
     0.100,
     0.100,
     0.100,
@@ -545,8 +569,8 @@ list_clkoutx_abs_tolerance_MHz = [
 # Output clock (MHz)
 # Try 250 MHz
 list_clkoutx_MHz = [
-    250.000,    # + Shift by 90 Degrees = 0.9 + 500 ps; 50% Duty Cycle = 0.5
-    250.000,    # + Shift by 90 Degrees = 0.9; 50% Duty Cycle = 0.5
+    125.000,    # + Shift by 90 Degrees = 0.9 + 500 ps; 50% Duty Cycle = 0.5
+    0.000,    # + Shift by 90 Degrees = 0.9; 50% Duty Cycle = 0.5
     0.000,
     0.000,
     0.000,

@@ -46,9 +46,8 @@ add wave -noupdate /fifo_cdcc_tb/inst_fifo_cdcc_dut/inst_fifo_read_gray_ctrl/o_r
 add wave -noupdate -radix unsigned /fifo_cdcc_tb/inst_fifo_cdcc_dut/inst_fifo_read_gray_ctrl/reg_tail_ptr_next
 add wave -noupdate -radix unsigned /fifo_cdcc_tb/inst_fifo_cdcc_dut/inst_fifo_read_gray_ctrl/reg_tail_ptr
 add wave -noupdate /fifo_cdcc_tb/inst_fifo_cdcc_dut/inst_fifo_read_gray_ctrl/valid_flag
-add wave -noupdate /fifo_cdcc_tb/inst_fifo_cdcc_dut/inst_fifo_read_gray_ctrl/reg_tail_ptr_incremented
 TreeUpdate [SetDefaultTree]
-WaveRestoreCursors {{Cursor 1} {4308 ns} 0}
+WaveRestoreCursors {{Cursor 1} {4308000 ps} 0}
 quietly wave cursor active 1
 configure wave -namecolwidth 461
 configure wave -valuecolwidth 109
@@ -64,4 +63,4 @@ configure wave -griddelta 40
 configure wave -timeline 0
 configure wave -timelineunits ns
 update
-WaveRestoreZoom {0 ns} {38707 ns}
+WaveRestoreZoom {0 ps} {38713500 ps}

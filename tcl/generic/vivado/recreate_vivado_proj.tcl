@@ -84,6 +84,12 @@ puts "TCL: orig_proj_dir: $orig_proj_dir"
 puts "TCL: Project is being created here: $origin_dir/vivado/"
 
 
+# Set the optimal number of threads used by Vivado and Synthesis tools
+# set_param general.maxThreads 32
+# set_param synth.maxThreads 8
+# report_param general.maxThreads
+# report_param synth.maxThreads
+
 
 # -----------------------------------
 # - Properties for current Project --

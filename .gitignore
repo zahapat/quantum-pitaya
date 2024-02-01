@@ -1,3 +1,4 @@
+outputs/*
 vivado/*
 vitis/*
 .vscode
@@ -18,8 +19,7 @@ build_x64
 *.gdb
 *.str
 *.log
-
-transcript
+*.zip
 
 ip/*
 
@@ -75,12 +75,11 @@ packages/uvvm/*/*/*/*/sim
 !packages/uvvm/*/*/*/*.sh
 !packages/uvvm/*/*/*/*/*.sh
 
-
-
-simulator
+# Ignore all files in ./simulator directory but allow some exceptions
+simulator/*
 !simulator/*.do
 !simulator/*.tcl
-
+!simulator/do
 
 
 # Ignore all files in ./boards up to a certain level

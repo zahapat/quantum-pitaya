@@ -34,13 +34,14 @@
 
 
     set_property generic {\
-        EMULATE_INPUTS=true\
-        PHOTON_2H_DELAY_NS=-2117.95\
-        PHOTON_2V_DELAY_NS=-2125.35\
-        PHOTON_3H_DELAY_NS=-1030.35\
-        PHOTON_3V_DELAY_NS=-1034.45\
-        PHOTON_4H_DELAY_NS=-3177.95\
-        PHOTON_4V_DELAY_NS=-3181.05\
+        INT_BYPASS_DSP=0\
+        INT_WHOLE_DDC_LOCOSC_OUT_FREQ_MHZ=25\
+        INT_DECIMAL_DDC_LOCOSC_OUT_FREQ_MHZ=0\
+        INT_DDC_NUMBER_OF_TAPS=15\
+        INT_DDC_COEF_WIDTH=15\
+        INT_DDC_OUT_DATA_WIDTH=20\
+        INT_DDC_DECIMATION=5\
+        INT_AVG_AVERAGE_BY=5\
     } [current_fileset]
 
 

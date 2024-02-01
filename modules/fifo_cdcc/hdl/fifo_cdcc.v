@@ -28,26 +28,29 @@ module fifo_cdcc
     // Declare Constants
     localparam INT_FIFO_PTR_BITS_CNT = $clog2(INT_FIFO_DEPTH);
 
-    // Loop variable
-    genvar i;
-
-    // Declare RAM
+    // Declare RAM + Initialize to zero
     reg[INT_FIFO_WIDTH-1:0] bram [INT_FIFO_DEPTH-1:0];
+    integer i;
+    initial begin
+        for (i = 0; i < INT_FIFO_DEPTH; i = i + 1) begin
+            bram[i] = 0;
+        end
+    end
     reg[INT_FIFO_WIDTH-1:0] reg_o_data = 0;
 
     // Write Ctrl Signals
     wire write_en;
     wire[INT_FIFO_PTR_BITS_CNT-1:0] wr_bin_address_bram;
     wire[INT_FIFO_PTR_BITS_CNT:0] wr_grayptr_in_wrclk;
-    reg[INT_FIFO_PTR_BITS_CNT:0] wr_grayptr_to_rdclk_1;
-    reg[INT_FIFO_PTR_BITS_CNT:0] wr_grayptr_to_rdclk_2;
+    reg[INT_FIFO_PTR_BITS_CNT:0] wr_grayptr_to_rdclk_1 = 0;
+    reg[INT_FIFO_PTR_BITS_CNT:0] wr_grayptr_to_rdclk_2 = 0;
 
     // Read Ctrl Signals
     wire rd_en;
     wire[INT_FIFO_PTR_BITS_CNT-1:0] rd_bin_address_bram;
     wire[INT_FIFO_PTR_BITS_CNT:0] rd_grayptr_in_rdclk;
-    reg[INT_FIFO_PTR_BITS_CNT:0] rd_grayptr_to_wrclk_1;
-    reg[INT_FIFO_PTR_BITS_CNT:0] rd_grayptr_to_wrclk_2;
+    reg[INT_FIFO_PTR_BITS_CNT:0] rd_grayptr_to_wrclk_1 = 0;
+    reg[INT_FIFO_PTR_BITS_CNT:0] rd_grayptr_to_wrclk_2 = 0;
 
 
     // Write Ctrl

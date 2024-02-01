@@ -188,54 +188,19 @@ if {${find_tb_file} == 1} {
 }
 
 
-# Search for the given file in the project
-# puts "TCL: Search for the given file in the project"
-# set topFileFound_path [glob modules/*/{$topFile}* modules/*/*/{$topFile}* modules/*/*/*/{$topFile}* modules/*/*/*/*/{$topFile}*]
-
-# # Assess that the number of occurrences of this file is 1
-# puts "TCL: Assess that the number of occurrences of this file is 1"
-# if { [llength $topFileFound_path] == 1 } {
-#     puts "TCL: File $topFile exists: $topFileFound_path"
-# } else {
-#     puts "TCL: ERROR: File specified by the Command-line argument does not exist or there are multiple files in the project. "
-#     return 2
-# }
-
-
 # -------------------------
 # - OPEN EXISTING PROJECT -
 # -------------------------
 
 # Open and reset the project
-# close_project -quiet
 puts "TCL: OPENING PROJECT $_xil_proj_name_"
 open_project "${origin_dir}/vivado/${_xil_proj_name_}.xpr"
 reset_project
-# create_project -in_memory "srcs_modelsim" -dir $orig_proj_dir
-
-# add_files -norecurse ./pck/constants_pck.vhd
-# add_files -norecurse ./pck/constants_pck_tb.vhd
-
 
 
 # ---------------------------
 # - REMOVE ALL SOURCE FILES -
 # ---------------------------
-
-# Remove all non-module files if exist to clean-up the project
-# puts "TCL: Remove all files"
-# remove_files [get_files -filter {IS_AVAILABLE == 0}]
-
-# Create filesets (if not found)
-# if {[string equal [get_filesets -quiet sources_1] ""]} {
-#   create_fileset -srcset sources_1
-# }
-# if {[string equal [get_filesets -quiet sim_1] ""]} {
-#     create_fileset -simset sim_1
-# }
-# if {[string equal [get_filesets -quiet constrs_1] ""]} {
-#   create_fileset -constrset constrs_1
-# }
 
 # Set filesets objects
 set objSrc [get_filesets sources_1]
@@ -244,78 +209,37 @@ set objConst [get_filesets constrs_1]
 
 # Remove all previous source files
 puts "TCL: Remove all source files in object all filesets"
-# remove_files [get_files -of_objects $objSrc]
-# remove_files [get_files -of_objects $objSim]
-# remove_files [get_files -of_objects $objConst]
 
 
 # --------------------------------------------------
 # - SET A NEW TOP MODULE AND ADD IT TO THE PROJECT -
 # --------------------------------------------------
-# Compile order for ModelSim
-# set ModelSim_SrcsComporder {}
-# set ModelSim_PckComporder {}
-
 # Set the file graph
-# https://www.xilinx.com/support/answers/63488.html
-# To find the list of missing sources in a hierarchy using a Tcl script,
-# you can use the command "report_compile_order" with the argument "-missing_instance".
 puts "TCL: Find missing sources to compile the new temp top module and report compile order "
 set_property source_mgmt_mode All [current_project]
 update_compile_order
-# Set 'sources_1' fileset TOP module
-# set topFileFound_normalized "[file normalize $topFileFound_path]"
-# set path_to_topfile "[string trimright $topFileFound_normalized $topFile]"
-# puts "TCL: path_to_topfile = $path_to_topfile"
-
-# if {[regexp -all {_tb.} $topFile] == 1} {
-#     if {[regexp -all {_tb.vhd} $topFile] == 1} {
-#         # "[string trimright $topFileFound_normalized $topFile]"
-#         add_found_file_vhdl $path_to_topfile $objSim $topFile "sim_1" $file_library_sim
-#     } elseif {[regexp -all {_tb.sv} $topFile] == 1} {
-#         add_found_file_sv $path_to_topfile $objSim $topFile "sim_1" $file_library_sim
-#     } elseif {[regexp -all {_tb.v} $topFile] == 1} {
-#         add_found_file_v $path_to_topfile $objSim $topFile "sim_1" $file_library_sim
-#     }
-# } else {
-#     if {[regexp -all {.vhd} $topFile] == 1} {
-#         add_found_file_vhdl $path_to_topfile $objSrc $topFile "sources_1" $file_library_src
-#     } elseif {[regexp -all {.sv} $topFile] == 1} {
-#         add_found_file_sv $path_to_topfile $objSrc $topFile "sources_1" $file_library_src
-#         # add_files -norecurse -fileset $objSim ${origin_dir}/$topFileFound_normalized
-#     } elseif {[regexp -all {.v} $topFile] == 1} {
-#         add_found_file_v $path_to_topfile $objSrc $topFile "sources_1" $file_library_src
-#     }
-# }
-
 
 # Add IP cores
 source "./tcl/project_specific/vivado/add_ip_cores.tcl"
 
-# Add Global Packages
-# source "./packages/sim_tools/compile_order.tcl"
-# source "./packages/proj_specific_src/compile_order.tcl"
-# source "./packages/proj_specific_sim/compile_order.tcl"
-
 # Add Top File
 puts "TCL: Searching for module: $topFile"
 set topFile_noposix [lindex [split $topFile "."] 0]
-set foundSrcs [glob -nocomplain -type f modules/*/{${topFile}}* modules/${topFile_noposix}/*/{${topFile}}* modules/${topFile_noposix}/*/*/{${topFile}}* modules/${topFile_noposix}/*/*/*/{${topFile}}*]
+set foundTopSrc [glob -nocomplain -type f modules/*/{${topFile}}* modules/${topFile_noposix}/*/{${topFile}}* modules/${topFile_noposix}/*/*/{${topFile}}* modules/${topFile_noposix}/*/*/*/{${topFile}}*]
 
-if { [llength $foundSrcs] == 1 } {
-    set srcPathFound [string range $foundSrcs 0 end]
-    set abs_path_to_filedir [file dirname "[file normalize ${origin_dir}/$srcPathFound]"]
-    puts "TCL: abs_path_to_filedir = $abs_path_to_filedir"
+if { [llength $foundTopSrc] == 1 } {
+    set srcPathFound [string range $foundTopSrc 0 end]
+    set abs_path_to_topFile [file dirname "[file normalize ${origin_dir}/$srcPathFound]"]
+    puts "TCL: abs_path_to_topFile = $abs_path_to_topFile"
 
     # Add all existing files from the current module directory (COUNT 1)
-    source "$abs_path_to_filedir/../compile_order.tcl"
+    source "$abs_path_to_topFile/../compile_order.tcl"
 } else {
     puts "TCL: ERROR: There are multiple files with the name $topFile. Ensure there is only one in all searched project directories."
     quit
 }
 # lappend ModelSim_SrcsComporder $topFileFound_normalized
-# set_property TOP $topFile [current_fileset]
-set topFileFound_path $foundSrcs
+set topFileFound_path $foundTopSrc
 set topFileFound_normalized "[file normalize $topFileFound_path]"
 set path_to_topfile "[string trimright $topFileFound_normalized $topFile]"
 puts "TCL: path_to_topfile = $path_to_topfile"
@@ -324,9 +248,6 @@ update_compile_order
 set newTop [get_property TOP [current_fileset]]
 puts "TCL: New TOP file reported after update_compile_order: $newTop"
 puts "TCL: Path to the new Top module: $topFileFound_normalized"
-# report_compile_order -used_in synthesis
-# get_files -compile_order sources_1 -used_in synthesis
-
 
 # Set target language of the project based on the TOP file (Verilog, VHDL)
 set ip_name [lindex [split $topFileFound_normalized "."] 0]
@@ -350,23 +271,8 @@ if {$file_type eq "vhd"} {
 # -------------------------------------
 # - Add all files in the packages dir -
 # -------------------------------------
-# set packagesFound [glob ./packages/sim_tools/*{pack_tb.}*  ./packages/proj_specific_src/*{_pack.}*  ./packages/proj_specific_sim/*{_pack_tb.}*]
 set out_file_path_added_vivado "${origin_dir}/vivado/0_report_added_modules.rpt"
-set out_file_path "${origin_dir}/do/modules.tcl"
-# set all_modules [open $out_file_path "w"]
-# foreach p $packagesFound {
-    # puts -nonewline $all_modules "[file normalize $p]\n"
-    # lappend ModelSim_PckComporder "[file normalize $p]"
-# }
-# close $all_modules
-
-# TEST
-# source "./packages/sim_tools/compile_order.tcl"
-# source "./packages/proj_specific_src/compile_order.tcl"
-# source "./packages/proj_specific_sim/compile_order.tcl"
-# source "$path_to_topfile/../compile_order.tcl"
-
-
+set out_file_path "${origin_dir}/simulator/modules.tcl"
 
 # --------------------------------
 # - Detect and find UVVM Sources -
@@ -444,9 +350,7 @@ if {$uvvm_detected_done == 1} {
 # - Find missing .vhd/.v/.sv modules -
 # ------------------------------------
 # List all missing submodules
-# report_compile_order -used_in simulation -missing_instance -of [get_ips $newTop] -file "${origin_dir}/vivado/0_report_modules_missing.rpt"
 report_compile_order -used_in synthesis -missing_instance -file "${origin_dir}/vivado/0_report_modules_missing.rpt"
-# set missingFiles [report_compile_order -used_in simulation -missing_instance -of [get_ips $newTop]]
 set missingFiles [report_compile_order -used_in synthesis -missing_instance]
 puts "TCL: Exporting missing modules in design here: ${origin_dir}/vivado/0_report_modules_missing.rpt"
 
@@ -455,15 +359,13 @@ set slurp_report [open "${origin_dir}/vivado/0_report_modules_missing.rpt" r]
 set file_data [read $slurp_report]
 set data_ln [split $file_data "\n"]
 set report_lines [llength $data_ln]
-# puts "$report_lines"
 close $slurp_report
 
 #  Modify the list of missing files in a way to be possible to search for them in the project direcories
 set slurp_file [open "${origin_dir}/vivado/0_report_modules_missing.rpt" r]
 set all_modules_added_vivado [open $out_file_path_added_vivado "a"]
 set all_modules [open $out_file_path "a"]
-# close $all_modules
-# set all_modules [open $out_file_path "a"]
+
 
 # Iterate over maximal possible levels in hierarchy (= 10)
 set pattern ")/("
@@ -484,7 +386,6 @@ for {set i 0} {$i < $hier_levels} {incr i} {
         # If number of occurrences of the word "empty" in a line is 1
         if { [string first $empty_pattern $line] != -1} {
             puts "TCL: Design hierarchy is complete. DONE!"
-            # set i $hier_levels
             set hier_done 1
         }
         # do not add the else branch
@@ -532,8 +433,6 @@ for {set i 0} {$i < $hier_levels} {incr i} {
             # Scan for invalid characters: space " "
             set line_missing_module_name [string map {" " "*"} $line_missing_module_name]
             set line_missing_module_name_verilog [string map {" " "*"} $line_missing_module_name_verilog]
-
-            # puts "TCL: DEBUG: line_missing_module_name = $line_missing_module_name"
 
             # Check for invalid beginning of the name - if the name is ""
             if {$line_missing_module_name eq ""} {
@@ -707,20 +606,6 @@ for {set i 0} {$i < $hier_levels} {incr i} {
     update_compile_order
     report_compile_order -used_in synthesis -missing_instance -file "${origin_dir}/vivado/0_report_modules_missing.rpt"
 
-    # # Find empty_pattern in the file indicating there are no missing modules
-    # set slurp_file [open "${origin_dir}/vivado/0_report_modules_missing.rpt" r]
-    # while {-1 != [gets $slurp_file line]} {
-    #     # If number of occurrences of the word "empty" in a line is 1
-    #     if { [string first $empty_pattern $line] != -1} {
-    #         puts "TCL: Design hierarchy is complete. DONE!"
-    #         set i $hier_levels
-    #         break
-    #     }
-    #     # do not add the else branch
-    # }
-    # close $slurp_file
-    # set slurp_file [open "${origin_dir}/vivado/0_report_modules_missing.rpt" r]
-
     # Break if lost in infinite loop
     incr act_break_level
     if {$act_break_level == $break_level} {
@@ -739,21 +624,12 @@ for {set i 0} {$i < $hier_levels} {incr i} {
 # close $slurp_file
 
 # The last module in the list is always the Top module
-# puts -nonewline $all_modules "[file normalize $topFileFound_normalized]"
 puts -nonewline $all_modules_added_vivado "./$topFileFound_path"
 close $all_modules_added_vivado
 
 
 # Set the new top module after all required sources have been added
 set_property TOP $topFile [current_fileset]
-
-# if {${find_tb_file} == 1} {
-#     puts -nonewline $all_modules "\
-#         ./$topFileTbFound_path"
-# } else {
-#     puts -nonewline $all_modules "\
-#         ./$topFileFound_path"
-# }
 close $all_modules
 
 

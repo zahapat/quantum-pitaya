@@ -1,0 +1,61 @@
+
+SIMULATION REPORT          Generated on Mon Jun 26 17:41:40 2023
+
+
+Design simulated: C:/Git/zahapat/FQEnv/simulator/work.dsp_path_tb
+Number of signals/nets in design: 97
+Number of processes in design: 65
+Number of instances from user libraries in design: 6
+Number of executable statements in design: 354
+
+Simulator Parameters:
+
+    Current directory: C:/Git/zahapat/FQEnv/simulator
+    Project file: C:/Git/zahapat/FQEnv/simulator/project.mpf
+    Project root directory: .
+    Simulation time resolution: 1ps
+
+List of Design units used:
+
+    Module: fir_parallel , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel.sv
+    Timescale: 1ns / 100ps
+    Occurrences: 2
+
+    Module: averager , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/averager/hdl/averager.sv
+    Timescale: 1ns / 100ps
+    Occurrences: 2
+
+    Module: ddc , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/ddc/hdl/ddc.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: dsp_path , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/dsp_path/hdl/dsp_path.sv
+    Timescale: 1ns / 1ns
+    Occurrences: 1
+
+    Module: dsp_path_tb , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/dsp_path/sim/dsp_path_tb.sv
+    Timescale: 1ps / 1ps
+    Occurrences: 1
+
+    Module: std , acc : <novopt>
+    Library: C:/intelFPGA/20.1/modelsim_ase/sv_std
+    Source File: $MODEL_TECH/../verilog_src/std/std.sv
+    Occurrences: 1
+
+    Module: fir_parallel_sv_unit , acc : <novopt>
+    Library: C:/Git/zahapat/FQEnv/simulator/work
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel.sv
+    Source File: C:/Git/zahapat/FQEnv/modules/fir_parallel/hdl/fir_parallel_coeff.svh
+    Timescale: 1ns / 100ps
+    Occurrences: 1
+

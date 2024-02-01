@@ -39,6 +39,9 @@ set proj_dir [get_property directory [current_project]]
 # Set project properties
 set obj [current_project]
 
+# Constraint files in constrs_1 won't be used in synthteis
+set_property used_in {implementation} [get_files -of [get_filesets {constrs_1}]]
+
 # Set the file graph
 puts "TCL: Update and report compile order "
 update_compile_order
@@ -59,8 +62,10 @@ report_property [get_runs synth_1] -file "${origin_dir}/vivado/1_report_property
 
 # Execute Synthesis
 puts "TCL: Running Synthesis. "
+set_property used_in {implementation} [get_files constrs_1]
 source "${origin_dir}/tcl/project_specific/vivado/strategy_synth.tcl"
 reset_run synth_1
+set_param general.maxThreads 16
 launch_runs synth_1 -jobs 4
 wait_on_run synth_1
 open_run synth_1

@@ -1,1 +1,0 @@
-This folder contains a template for module generation

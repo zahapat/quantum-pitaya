@@ -8,7 +8,8 @@ import sys
 import getopt
 
 # ----- Import generator of the TCL file -----
-import genTclGenerics as genericGen
+# import genTclGenerics as genericGen
+import topfileGenerics as genericGen
 
 # ----- Functions -----
 def usage():
@@ -270,8 +271,9 @@ def main(argv):
     if len(generic_vals) == len(generic_names):
         for i in range(len(generic_vals)):
             print("Generic {}: {} = {}".format(i, generic_names[i], generic_vals[i]))
-        
-        genericGen.genTclFileGenerator(
+
+        # genericGen.genTclFileGenerator(
+        genericGen.topfileGenericsGenerator(
             proj_name, proj_dir, output_dir,
             generic_names, generic_vals)
     else:
